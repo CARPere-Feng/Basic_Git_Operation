@@ -27,6 +27,7 @@ Questions are :  (for a new coder, follow the sequence and you will satisfy the 
 6. [How to pull codes from remote repo to local repo?](#jump4)
 7. [If pulling failed, how to tackle with conflicts?](#jump6)
 8. [CODES COLLABORATION, how to contribute to the main branch: Pull Request](#jump7)
+9. [How to merge branches?](*jump9)
 
 ******
 
@@ -105,6 +106,7 @@ Now, you have updated local repo with your changes. Next step is update remote r
 /// the command below means push local branch, master and dev, to remote repo.
 $ git push origin master dev
 ```
+
 #### <span id="jump5">5. If pushing failed, how to config your user setting?</span>
 
 
@@ -123,3 +125,14 @@ By pulling, you update your local repo with new changes of remote repo.
 
 In github webpage, you can push your codes in your remote repo to others' remote repo:
 ![3](figures/3.png)
+
+#### <span id="jump9">9. How to merge branches?<span>
+
+When you fixed a bug or stabilized your own branch, you will need to merge your branch to a main branch. For example, you have checked out a new branch of your own, `xxx`, and have already finished changing. You should merge `xxx` branch to `dev`, so that you can make a `pull request`.
+
+Here, we assume you are at branch `xxx`, and want to merge `xxx` with `dev`:
+```
+$ git switch dev
+$ git merge xxx
+```
+By this step, your codes on `dev` branch should be the same as `xxx` branch.
