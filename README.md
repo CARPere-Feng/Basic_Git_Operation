@@ -1,4 +1,4 @@
-# Basic_Git_Operation
+﻿# Basic_Git_Operation
 Serving for those who are new to Git and Github, these docs are going to tell you how to realize some basic git operations.
 
 ## Some Necessary Terminologies
@@ -27,7 +27,8 @@ Questions are :  (for a new coder, follow the sequence and you will satisfy the 
 6. [How to pull codes from remote repo to local repo?](#jump4)
 7. [If pulling failed, how to tackle with conflicts?](#jump6)
 8. [CODES COLLABORATION, how to contribute to the main branch: Pull Request](#jump7)
-9. [How to merge branches?](*jump9)
+9. [How to merge branches?](#jump9)
+10. [想跟进他人的remote repo，pull最新代码，如何设置upstream?](#jump20)
 
 ******
 
@@ -57,6 +58,8 @@ Receiving objects: 100% (3/3), done.
 At this step, you probably need to get an ssh key for your computer. Please follow [this github tutorial](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) to generate a key.
 
 After cloning, you can modify codes in this local repo.
+
+至此，你已经有了自己的local repo, 自己的remote repo。但是，如果在你写代码时，你`fork`的他人remote repo有新的代码更新，你还无法将他人的remote repo代码`pull`到自己的local repo。因此，在完成这一步之后，建议继续完成[这一步](#jump20)，从而能够跟进他人remote repo的最新代码。
 #### <span id="jump8">3. Check out your own branch</span>
 
 __branch__: A repo is like a tree. There can be many different versions, which are called branch.
@@ -126,7 +129,7 @@ By pulling, you update your local repo with new changes of remote repo.
 In github webpage, you can push your codes in your remote repo to others' remote repo:
 ![3](figures/3.png)
 
-#### <span id="jump9">9. How to merge branches?<span>
+#### <span id="jump9">9. How to merge branches?</span>
 
 When you fixed a bug or stabilized your own branch, you will need to merge your branch to a main branch. For example, you have checked out a new branch of your own, `xxx`, and have already finished changing. You should merge `xxx` branch to `dev`, so that you can make a `pull request`.
 
@@ -136,3 +139,25 @@ $ git switch dev
 $ git merge xxx
 ```
 By this step, your codes on `dev` branch should be the same as `xxx` branch.
+
+#### <span id="jump20"> 10. 想跟进他人的remote repo，pull最新代码，如何设置upstream? </span>
+
+```
+// 进入local repo文件夹
+$ git remote set-url origin git@github.com:[your github user name]/drake.git
+$ git remote add upstream git@github.com:[others github user name]/drake.git
+$ git remote set-url --push upstream no_push
+```
+
+上述操作，将设置两个remote repo source。`origin`指向你`fork`出来的自己的remote repo，`upstream`指向他人的remote repo，并将他人的remote repo设置为`no_push`。  
+
+至此，你可以从他人的remote repo `pull` 代码到你的local repo，同时也能`pull`自己remote repo的代码到你的local repo，并`push`自己的local repo到自己的remote repo(如同前面教的一样)。
+
+```
+/// pull 他人代码到自己local repo，从而跟进最新代码
+$ git pull upstream master dev
+
+/// push 自己代码到自己local repo
+$ git push origin master dev xxx
+```
+这里的`master dev xxx`是`branch`的名称。
