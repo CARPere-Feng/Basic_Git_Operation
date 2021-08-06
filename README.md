@@ -92,6 +92,8 @@ git push updates the remote branch with local commits. It is one of the four com
 
 You will need to commit your changes before push your codes. __By commit changes__, you update your local repo with your modification of codes. __By push codes__, you update your remote repo with your local repo.
 
+![4](figures/4.png)
+
 -----------
 Assume now that you have changed some codes in your local repo, you need to tell git that these changes can be recorded, so you `commit` changes. Before `commit`, we need to `add` changes:
 
