@@ -1,4 +1,4 @@
-# Basic_Git_Operation
+﻿# Basic_Git_Operation
 Serving for those who are new to Git and Github, these docs are going to tell you how to realize some basic git operations.
 
 ## Some Necessary Terminologies
@@ -27,7 +27,8 @@ Questions are :  (for a new coder, follow the sequence and you will satisfy the 
 6. [How to pull codes from remote repo to local repo?](#jump4)
 7. [If pulling failed, how to tackle with conflicts?](#jump6)
 8. [CODES COLLABORATION, how to contribute to the main branch: Pull Request](#jump7)
-9. [How to merge branches?](*jump9)
+9. [How to merge branches?](#jump9)
+10. [想跟进他人的remote repo，pull最新代码，如何设置upstream?](#jump20)
 
 ******
 
@@ -36,7 +37,8 @@ Click into the github repository, like below. Then choose`Fork`.
 
 ![1](figures/1.png)
 
-You can find that there is a repo with the same name in your github. As that repo is in your github, any changes will not affect the repo you forked from.
+A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
+After fork, you can find that there is a repo with the same name in your github. As that repo is in your github, any changes will not affect the repo you forked from.
 
 #### <span id="jump2">2. How to clone your remote repo for creating a new local repo?</span>
 
@@ -56,10 +58,15 @@ Receiving objects: 100% (3/3), done.
 
 At this step, you probably need to get an ssh key for your computer. Please follow [this github tutorial](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) to generate a key.
 
+Using the SSH protocol, you can connect and authenticate to remote servers and services. With SSH keys, you can connect to GitHub without supplying your username and personal access token at each visit.
+
 After cloning, you can modify codes in this local repo.
+
+至此，你已经有了自己的local repo, 自己的remote repo。但是，如果在你写代码时，你`fork`的他人remote repo有新的代码更新，你还无法将他人的remote repo代码`pull`到自己的local repo。因此，在完成这一步之后，建议继续完成[这一步](#jump20)，从而能够跟进他人remote repo的最新代码。
 #### <span id="jump8">3. Check out your own branch</span>
 
-__branch__: A repo is like a tree. There can be many different versions, which are called branch.
+A repo is structured like a tree, each repository has one default branch, and can have multiple other branches for many different versions of the code. A branch is an isolate development work without affecting other branches in the repository. You can merge a branch into another branch using a pull request.
+Usually, the stable version of a repo is named as “master“ branch, while the unstable version under development is called “dev“ branch
 
 Mostly, `master` branch is a stable version of this repo. `dev` branch is an unstable version of this repo.
 
@@ -79,6 +86,10 @@ $ git status
 
 -----------
 ###### what is COMMIT and PUSH?
+git commit creates a commit, which is like a snapshot of your repository. These commits are snapshots of your entire repository at specific times. You should make new commits often, based around logical units of change.
+git push updates the remote branch with local commits. It is one of the four commands in Git that prompts interaction with the remote repository. You can also think of git push as update or publish.
+
+
 You will need to commit your changes before push your codes. __By commit changes__, you update your local repo with your modification of codes. __By push codes__, you update your remote repo with your local repo.
 
 -----------
@@ -112,6 +123,10 @@ $ git push origin master dev
 
 #### <span id="jump4">6. How to pull codes from remote repo to local repo?</span>
 
+git pull updates your current local working branch, and all of the remote tracking branches. It's a good idea to run git pull regularly on the branches you are working on locally.
+
+Without git pull, (or the effect of it,) your local branch wouldn't have any of the updates that are present on the remote.
+
 For a collaboration repository, update your local repo with remote repo is necessary.
 
 So you should `pull` codes from remote repo before starting working:
@@ -123,10 +138,12 @@ By pulling, you update your local repo with new changes of remote repo.
 #### <span id="jump6">7. If pulling failed, how to tackle with conflicts?</span>
 #### <span id="jump7">8. CODES COLLABORATION, how to contribute to the main branch: Pull Request</span>
 
+Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
+
 In github webpage, you can push your codes in your remote repo to others' remote repo:
 ![3](figures/3.png)
 
-#### <span id="jump9">9. How to merge branches?<span>
+#### <span id="jump9">9. How to merge branches?</span>
 
 When you fixed a bug or stabilized your own branch, you will need to merge your branch to a main branch. For example, you have checked out a new branch of your own, `xxx`, and have already finished changing. You should merge `xxx` branch to `dev`, so that you can make a `pull request`.
 
@@ -136,3 +153,25 @@ $ git switch dev
 $ git merge xxx
 ```
 By this step, your codes on `dev` branch should be the same as `xxx` branch.
+
+#### <span id="jump20"> 10. 想跟进他人的remote repo，pull最新代码，如何设置upstream? </span>
+
+```
+// 进入local repo文件夹
+$ git remote set-url origin git@github.com:[your github user name]/drake.git
+$ git remote add upstream git@github.com:[others github user name]/drake.git
+$ git remote set-url --push upstream no_push
+```
+
+上述操作，将设置两个remote repo source。`origin`指向你`fork`出来的自己的remote repo，`upstream`指向他人的remote repo，并将他人的remote repo设置为`no_push`。  
+
+至此，你可以从他人的remote repo `pull` 代码到你的local repo，同时也能`pull`自己remote repo的代码到你的local repo，并`push`自己的local repo到自己的remote repo(如同前面教的一样)。
+
+```
+/// pull 他人代码到自己local repo，从而跟进最新代码
+$ git pull upstream master dev
+
+/// push 自己代码到自己local repo
+$ git push origin master dev xxx
+```
+这里的`master dev xxx`是`branch`的名称。
